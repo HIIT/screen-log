@@ -45,12 +45,16 @@ log._log.bubbles = function() {
 }
 
 log.log = function() {
-	
+
 	log._log.articles();
 	log._log.bubbles();
 
 	if (log._mouse) log._save('mouse||' + log._mouse.x + '|0|' + log._mouse.y + '|0');
 }
 
-log.mouse_init();
-setInterval(log.log, 500)
+log.start = function(interval) {
+	log.mouse_init();
+	setInterval(log.log, interval);
+};
+
+log.start(500);
