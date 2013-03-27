@@ -12,8 +12,7 @@ log.mouse_init = function() {
 
 
 log._save = function(d) {
-	// TODO: ADD UNIX TIMESTAMP
-	console.log(d);
+	console.log($.now() + '|' + d);
 }
 
 log.log = function() {
