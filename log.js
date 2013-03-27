@@ -15,17 +15,15 @@ log._save = function(d) {
 	console.log($.now() + '|' + d);
 }
 
-log.log = function() {
-	// assume jQuery
-	var basex = window.screenX;
-	var basey = window.screenY;
+// subloggers
+log._log = {};
+
+log._log.articles = function() {
 
 	var left = $('#articles').position().left;
 
-	// articles
-	// aika, tyyppi, y, korkeus, leveys
 	$.each($('article'), function(i, a) {
-		// get the content
+		// get the content of each article
 		$.each($(a).children(), function(i, c) {
 			$c = $(c);
 
@@ -35,15 +33,21 @@ log.log = function() {
 			log._save(type + '|' + '|' + $c.html() + '|' + ($c.position().top - window.pageYOffset) + '|' + $c.height() + '|' + ($c.position().left + left) + '|' + $c.width());
 		});
 	});
+};
 
-
+log._log.bubbles = function() {
 	// bubbles
 	$.each($('.contextbubble'), function(i, b) {
 		$b = $(b);
-		// aika, tyyppi, y, korkeus, leveys
-
+		// TODO: check x,y,w,h correctness
 		log._save('circle|' + b.textContent + '|' + $b.position().top + '|' + b.getBoundingClientRect().height + '|' + $b.position().left + '|' + b.getBoundingClientRect().width)
 	});
+}
+
+log.log = function() {
+	
+	log._log.articles();
+	log._log.bubbles();
 
 	if (log._mouse) log._save('mouse||' + log._mouse.x + '|0|' + log._mouse.y + '|0');
 }
